@@ -2,7 +2,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: grey;
+    background-color: #f4f4f4;
     color: #333;
 }
 
@@ -18,7 +18,7 @@ main {
     max-width: 800px;
     margin: 2em auto;
     padding: 1em;
-    background-color: grey;
+    background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }

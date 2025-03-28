@@ -1,16 +1,16 @@
-const CACHE_NAME = 'link-sharer-cache-v1';
-// Lista de assets a serem cacheados na instalação
+const CACHE_NAME = 'link-sharer-cache-v1'; // Mantenha ou incremente (v2) se fizer mudanças
 const STATIC_ASSETS = [
-    './', // Necessário para a start_url '.' ou '/'
-    './index.html',
-    './style.css',
-    './app.js',
-    './manifest.json',
-    './components/link-form.js',
-    './components/link-item.js',
-    './components/link-list.js',
-    './icons/icon-192.png',
-    'https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js' // Cacheia a biblioteca QR
+    // Ajuste os caminhos para serem relativos à raiz do site na Vercel
+    '/', // A raiz do site
+    '/index.html',
+    '/style.css',
+    '/app.js',
+    '/manifest.json',
+    '/components/link-form.js', // Caminho a partir da raiz
+    '/components/link-item.js',
+    '/components/link-list.js',
+    '/icons/icon-192.png',      // Caminho a partir da raiz
+    'https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js' // URL externa permanece igual
 ];
 
 // Evento de Instalação: Cacheia os assets estáticos

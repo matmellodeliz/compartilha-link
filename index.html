@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compartilhador de Links</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#007bff"/>
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Biblioteca QR Code (QRious) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Compartilhador de Links PWA</h1>
+    </header>
+
+    <main>
+        <!-- Formulário para adicionar links -->
+        <link-form></link-form>
+
+        <!-- Lista onde os links serão exibidos -->
+        <link-list></link-list>
+    </main>
+
+    <!-- Scripts dos Web Components (carregar antes de app.js) -->
+    <script src="components/link-item.js"></script>
+    <script src="components/link-list.js"></script>
+    <script src="components/link-form.js"></script>
+
+    <!-- Script principal da aplicação -->
+    <script src="app.js"></script>
+</body>
+</html>

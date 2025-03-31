@@ -1,16 +1,15 @@
-const CACHE_NAME = 'link-sharer-cache-v1'; // Mantenha ou incremente (v2) se fizer mudanças
+const CACHE_NAME = 'link-sharer-cache-v1';
 const STATIC_ASSETS = [
-    // Ajuste os caminhos para serem relativos à raiz do site na Vercel
     '/', // A raiz do site
     '/index.html',
     '/style.css',
     '/app.js',
     '/manifest.json',
-    '/components/link-form.js', // Caminho a partir da raiz
+    '/components/link-form.js',
     '/components/link-item.js',
     '/components/link-list.js',
-    '/icons/icon-192.png',      // Caminho a partir da raiz
-    'https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js' // URL externa permanece igual
+    '/icons/icon-192.png',
+    'https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js' // URL externa pro QR
 ];
 
 // Evento de Instalação: Cacheia os assets estáticos
@@ -95,17 +94,14 @@ self.addEventListener('fetch', event => {
                 })
                 .catch(error => {
                     console.error('[Service Worker] Erro no fetch (cache first):', error);
-                    // Opcional: Retornar uma página offline padrão
                     // return caches.match('./offline.html');
                 })
         );
     } else {
-        // Para outras requisições (APIs externas, etc.), usa Network First (ou outra estratégia)
         // console.log('[Service Worker] Buscando da rede (não-asset):', event.request.url);
         event.respondWith(
             fetch(event.request).catch(error => {
                 console.warn('[Service Worker] Falha ao buscar da rede (não-asset):', error);
-                // Opcional: Retornar algo do cache ou uma resposta padrão offline
             })
         );
     }

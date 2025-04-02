@@ -51,7 +51,6 @@ self.addEventListener('activate', event => {
     );
 });
 
-
 // Evento Fetch: Estratégia Cache First para assets estáticos
 self.addEventListener('fetch', event => {
     // Ignora requisições não-GET

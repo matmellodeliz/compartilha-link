@@ -1,3 +1,4 @@
+/* Estilos globais */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -6,6 +7,7 @@ body {
     color: #333;
 }
 
+/* Estilos do cabeçalho */
 header {
     background-color: #007bff;
     color: white;
@@ -14,6 +16,7 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos do contêiner principal */
 main {
     max-width: 800px;
     margin: 2em auto;
@@ -23,7 +26,7 @@ main {
     border-radius: 8px;
 }
 
-/* Estilos básicos para os componentes (podem ser sobrescritos pelo Shadow DOM) */
+/* Estilos dos componentes */
 link-form, link-list {
     display: block;
     margin-bottom: 1.5em;
@@ -64,7 +67,6 @@ button.secondary:hover {
     background-color: #5a6268;
 }
 
-
 input[type="text"],
 input[type="url"] {
     padding: 0.5em;
@@ -77,6 +79,7 @@ input[type="url"] {
     margin-bottom: 0.5em; /* Espaço abaixo dos inputs */
 }
 
+/* Estilos responsivos */
 @media (min-width: 600px) {
     input[type="text"],
     input[type="url"] {

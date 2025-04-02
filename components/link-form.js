@@ -1,11 +1,12 @@
 class LinkForm extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-        this._render();
-        this._attachEvents();
+        this.attachShadow({ mode: 'open' }); // Cria Shadow DOM
+        this._render(); // Renderiza o formulário
+        this._attachEvents(); // Anexa eventos ao formulário
     }
 
+    // Renderiza o HTML do formulário
     _render() {
         this.shadowRoot.innerHTML = `
             <style>
@@ -57,6 +58,7 @@ class LinkForm extends HTMLElement {
         `;
     }
 
+    // Anexa o evento de envio ao formulário
     _attachEvents() {
         const form = this.shadowRoot.getElementById('link-form');
         form.addEventListener('submit', (event) => {

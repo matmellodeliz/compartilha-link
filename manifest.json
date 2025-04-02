@@ -1,17 +1,17 @@
 {
-    "name": "Compartilhador de Links PWA",
-    "short_name": "LinksPWA",
-    "description": "Um PWA simples para salvar e compartilhar links.",
-    "start_url": ".", 
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#007bff",
+    "name": "Compartilhador de Links PWA", // Nome completo do aplicativo
+    "short_name": "LinksPWA", // Nome curto para exibição
+    "description": "Um PWA simples para salvar e compartilhar links.", // Descrição do aplicativo
+    "start_url": ".", // URL inicial ao abrir o PWA
+    "display": "standalone", // Exibição como aplicativo independente
+    "background_color": "#ffffff", // Cor de fundo da tela inicial
+    "theme_color": "#007bff", // Cor do tema do navegador
     "icons": [
         {
-            "src": "icons/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
+            "src": "icons/icon-192.png", // Caminho do ícone
+            "sizes": "192x192", // Tamanho do ícone
+            "type": "image/png", // Tipo de arquivo
+            "purpose": "any maskable" // Propósito do ícone
         }
     ]
 }

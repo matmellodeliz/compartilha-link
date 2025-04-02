@@ -1,10 +1,11 @@
 class LinkList extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-        this._render();
+        this.attachShadow({ mode: 'open' }); // Cria Shadow DOM
+        this._render(); // Renderiza o contêiner da lista
     }
 
+    // Renderiza o HTML do contêiner da lista
     _render() {
         this.shadowRoot.innerHTML = `
             <style>
@@ -21,6 +22,7 @@ class LinkList extends HTMLElement {
         `;
     }
 
+    // Exibe os links na lista ou uma mensagem vazia
     displayLinks(links = []) {
         const container = this.shadowRoot.getElementById('list-container');
         const emptyMessage = this.shadowRoot.getElementById('empty-message');

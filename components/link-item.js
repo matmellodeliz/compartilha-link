@@ -1,12 +1,13 @@
 class LinkItem extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-        this._linkData = null;
-        this._qrVisible = false;
-        this._qrInstance = null;
+        this.attachShadow({ mode: 'open' }); // Cria Shadow DOM
+        this._linkData = null; // Dados do link
+        this._qrVisible = false; // Estado do QR Code
+        this._qrInstance = null; // Instância do QRious
     }
 
+    // Define os dados do link e renderiza o componente
     set link(data) {
         if (!data || !data.id || !data.name || !data.url) { return; }
         this._linkData = data;
@@ -16,6 +17,7 @@ class LinkItem extends HTMLElement {
 
     get link() { return this._linkData; }
 
+    // Renderiza o HTML do componente
     _render() {
         if (!this._linkData) return;
         const { id, name, url } = this._linkData;
@@ -72,6 +74,7 @@ class LinkItem extends HTMLElement {
         `;
     }
 
+    // Anexa eventos aos botões (compartilhar, QR Code, excluir)
     _attachEvents() {
         if (!this._linkData) return;
         const deleteButton = this.shadowRoot.querySelector('.delete-button');
@@ -120,10 +123,14 @@ class LinkItem extends HTMLElement {
            });
         }
     }
+
+    // Chamado quando o componente é adicionado ao DOM
     connectedCallback() {
         this._qrVisible = false; this._qrInstance = null;
         if (this._linkData && !this.shadowRoot.innerHTML) { this._render(); this._attachEvents(); }
     }
+
+    // Chamado quando o componente é removido do DOM
     disconnectedCallback() { this._qrInstance = null; }
 }
 customElements.define('link-item', LinkItem);

@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Variáveis para armazenar referências aos componentes (serão preenchidas depois)
+    // Referências aos componentes personalizados e estado da aplicação
     let linkFormComponent = null;
     let linkListComponent = null;
-    const STORAGE_KEY = 'pwa-links';
-    let links = []; // Nosso estado da aplicação
+    const STORAGE_KEY = 'pwa-links'; // Chave para armazenamento local
+    let links = []; // Estado da aplicação: lista de links
 
     // --- Funções de Armazenamento Local ---
-
+    // Carrega os links salvos no localStorage
     function loadLinks() {
         const linksJson = localStorage.getItem(STORAGE_KEY);
         try {
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Links carregados:', links);
     }
 
+    // Salva os links no localStorage
     function saveLinks() {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
@@ -33,61 +34,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Validação de URL ---
+    // Verifica se uma string é uma URL válida com protocolo HTTP/HTTPS
     function isValidHttpUrl(string) {
         let url;
-        // console.log(`[isValidHttpUrl] Validando string: "${string}"`);
         try {
             url = new URL(string);
-            // console.log(`[isValidHttpUrl] URL parseada com sucesso. Protocolo: "${url.protocol}"`);
         } catch (e) {
-            // console.warn(`[isValidHttpUrl] Falha ao parsear URL: ${e.message}`);
             return false;
         }
         const isValidProtocol = url.protocol === "http:" || url.protocol === "https:";
-        // console.log(`[isValidHttpUrl] Protocolo é http ou https? ${isValidProtocol}`);
         return isValidProtocol;
     }
 
-
     // --- Funções de Manipulação de Links ---
+    // Adiciona um novo link à lista
     function addLink(name, url) {
-        // console.log(`[addLink] Recebido: name="${name}", url="${url}"`);
         let trimmedUrl = url.trim();
-        // console.log(`[addLink] URL após trim: "${trimmedUrl}"`);
-
         let urlToCheck = trimmedUrl;
         let needsProtocolPrepended = !trimmedUrl.startsWith('http://') && !trimmedUrl.startsWith('https://');
-        // console.log(`[addLink] Precisa adicionar protocolo? ${needsProtocolPrepended}`);
 
         if (needsProtocolPrepended) {
             urlToCheck = 'https://' + trimmedUrl; // Tenta https primeiro
-            // console.log(`[addLink] Tentando com https:// : "${urlToCheck}"`);
         }
 
-        // console.log(`[addLink] Realizando 1ª validação em: "${urlToCheck}"`);
         if (isValidHttpUrl(urlToCheck)) {
-            // console.log(`[addLink] 1ª validação OK.`);
+            // URL válida
         } else {
-            // console.warn(`[addLink] 1ª validação FALHOU.`);
             if (needsProtocolPrepended) {
                 urlToCheck = 'http://' + trimmedUrl; // Tenta http como fallback
-                // console.log(`[addLink] Tentando com http:// : "${urlToCheck}"`);
-                // console.log(`[addLink] Realizando 2ª validação em: "${urlToCheck}"`);
                 if (!isValidHttpUrl(urlToCheck)) {
-                    console.error(`[addLink] 2ª validação (com http://) FALHOU.`);
                     alert('URL inválida. Por favor, insira uma URL completa (ex: https://exemplo.com).');
                     return;
                 }
-                // console.log(`[addLink] 2ª validação OK.`);
             } else {
-                 console.error(`[addLink] URL original ("${trimmedUrl}") parece ter protocolo mas falhou na validação.`);
-                 alert('URL inválida. Por favor, insira uma URL completa e correta (ex: https://exemplo.com).');
-                 return;
+                alert('URL inválida. Por favor, insira uma URL completa e correta (ex: https://exemplo.com).');
+                return;
             }
         }
 
         const finalUrl = urlToCheck;
-        // console.log(`[addLink] URL final a ser usada: "${finalUrl}"`);
 
         // Verificação de Duplicados
         const isDuplicate = links.some(link => link.url === finalUrl);
@@ -108,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('[addLink] Link adicionado com sucesso:', newLink);
     }
 
+    // Remove um link da lista pelo ID
     function deleteLink(id) {
         links = links.filter(link => link.id !== id);
         saveLinks();
@@ -116,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Renderização ---
+    // Atualiza a lista de links exibida no componente link-list
     function renderLinkList() {
         if (linkListComponent) {
             linkListComponent.displayLinks(links);
@@ -125,12 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Registro do Service Worker ---
+    // Registra o Service Worker para funcionalidades PWA
     function registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js', { scope: '.' }) // Garante escopo correto
                 .then(registration => {
                     console.log('Service Worker registrado com sucesso! Escopo:', registration.scope);
-                    // Lógica de atualização opcional...
                 }).catch(error => {
                     console.error('Falha no registro do Service Worker:', error);
                 });
@@ -139,7 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Manipulador de Links Curtos (Simulado) ---
+    // --- Manipulador de Links Curtos ---
+    // Redireciona para o link original com base no hash da URL
     function handleHashRedirect() {
         const shortId = window.location.hash.substring(1);
         if (!shortId) return;
@@ -159,9 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('hashchange', handleHashRedirect);
 
     // --- INÍCIO DA LÓGICA DE INICIALIZAÇÃO ---
-    registerServiceWorker();
-    loadLinks();
+    registerServiceWorker(); // Registra o Service Worker
+    loadLinks(); // Carrega os links salvos
 
+    // Aguarda a definição dos componentes personalizados
     Promise.all([
         customElements.whenDefined('link-form'),
         customElements.whenDefined('link-list')
@@ -199,5 +188,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Erro ao esperar pela definição dos custom elements:', error);
     });
     // --- FIM DA LÓGICA DE INICIALIZAÇÃO ---
-
-}); // Fim do DOMContentLoaded
+});
